@@ -1,5 +1,7 @@
+*.yml
+
 ### macOS ###
-.DS_Store
+*.DS_Store
 
 ### Gradle ###
 .gradle
@@ -12,6 +14,14 @@ build/
 # Log file
 *.log
 
+*.tmp
+*.swp
+
+### IntelliJ ###
+.idea/
+*.iml
+out/
+
 # Package Files #
 *.jar
 *.war
@@ -19,4 +29,3 @@ build/
 *.ear
 *.zip
 *.tar.gz
-*.rar
