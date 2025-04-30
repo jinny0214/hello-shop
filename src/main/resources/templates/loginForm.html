@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 폼</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background-color: #f9fafb;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-description {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .card-content {
+      padding: 1rem 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      color: #1f2937;
+      transition: border-color 0.15s ease-in-out;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2);
+    }
+
+    button {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border: none;
+      width: 100%;
+      transition: background-color 0.15s ease-in-out;
+    }
+
+    .btn-primary {
+      background-color: #1f2937;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #374151;
+    }
+
+    .btn-kakao {
+      background-color: #FEE500;
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-kakao:hover {
+      background-color: #E6CF00;
+    }
+
+    .btn-google {
+      background-color: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-google:hover {
+      background-color: #f3f4f6;
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .separator-line {
+      flex-grow: 1;
+      height: 1px;
+      background-color: #e5e7eb;
+    }
+
+    .separator-text {
+      margin: 0 0.5rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #f3f4f6;
+      text-align: center;
+    }
+
+    .card-footer p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .card-footer a {
+      color: #374151;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .card-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+    }
+
+    .forgot-password {
+      display: block;
+      text-align: right;
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.5rem;
+      text-decoration: none;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+      color: #374151;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .remember-me input {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+
+    .remember-me label {
+      margin-bottom: 0;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">로그인</h2>
+    <p class="card-description">계정에 로그인하거나 소셜 로그인을 이용하세요</p>
+  </div>
+  <div class="card-content">
+    <form id="login-form" action="/login" method="post">
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" required>
+        <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+      </div>
+      <div class="remember-me">
+        <input type="checkbox" id="remember">
+        <label for="remember">로그인 상태 유지</label>
+      </div>
+      <button type="submit" class="btn-primary">로그인</button>
+    </form>
+
+    <div class="separator">
+      <div class="separator-line"></div>
+      <span class="separator-text">또는</span>
+      <div class="separator-line"></div>
+    </div>
+
+    <button type="button" class="btn-kakao" id="kakao-login">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C6.48 3 2 6.48 2 10.8C2 13.8 3.9 16.38 6.72 17.7C6.54 18.24 5.88 20.1 5.82 20.34C5.82 20.34 5.76 20.7 6 20.82C6.24 20.94 6.54 20.76 6.54 20.76C6.84 20.58 9.6 18.66 10.32 18.18C10.86 18.24 11.4 18.3 12 18.3C17.52 18.3 22 14.82 22 10.5C22 6.18 17.52 3 12 3Z" />
+      </svg>
+      카카오톡으로 로그인
+    </button>
+    <button type="button" class="btn-google" id="google-login" onclick="location.href='/oauth2/authorization/google'">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+      </svg>
+      Google로 로그인
+    </button>
+  </div>
+  <div class="card-footer">
+    <p>계정이 없으신가요? <a href="/joinForm">회원가입</a></p>
+  </div>
+</div>
+
+<script>
+  /*
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+
+    // Handle login submission
+    console.log({ email, password, remember });
+  });
+
+  document.getElementById('kakao-login').addEventListener('click', function() {
+    // In a real implementation, this would integrate with Kakao SDK
+    console.log('Kakao login clicked');
+  });
+   */
+</script>
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입 폼</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background-color: #f9fafb;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-description {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .card-content {
+      padding: 1rem 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      color: #1f2937;
+      transition: border-color 0.15s ease-in-out;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2);
+    }
+
+    .postal-code-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .postal-code-container input {
+      flex: 1;
+    }
+
+    .postal-code-container button {
+      white-space: nowrap;
+      width: auto;
+    }
+
+    button {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border: none;
+      width: 100%;
+      transition: background-color 0.15s ease-in-out;
+    }
+
+    .btn-primary {
+      background-color: #1f2937;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #374151;
+    }
+
+    .btn-kakao {
+      background-color: #FEE500;
+      color: #000000;
+    }
+
+    .btn-kakao:hover {
+      background-color: #E6CF00;
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .separator-line {
+      flex-grow: 1;
+      height: 1px;
+      background-color: #e5e7eb;
+    }
+
+    .separator-text {
+      margin: 0 0.5rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #f3f4f6;
+      text-align: center;
+    }
+
+    .card-footer p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .card-footer a {
+      color: #374151;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .card-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+    }
+
+    .fieldError {
+      border-color: #bd2130;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">회원가입</h2>
+    <p class="card-description">계정을 만들거나 소셜 로그인을 이용하세요</p>
+  </div>
+  <div class="card-content">
+    <form id="signup-form" role="form" action="/members/new" th:object="${memberForm}" method="post">
+      <div class="form-group">
+        <label th:for="email">이메일</label>
+        <input type="email" th:field="*{email}" id="email" placeholder="example@email.com"
+               th:class="${#fields.hasErrors('email')} ? 'fieldError' : ''" required>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect date</p>
+      </div>
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input type="password" th:field="*{password}" id="password"
+               th:class="${#fields.hasErrors('password')} ? 'fieldError' : ''" required>
+        <p th:if="${#fields.hasErrors('password')}" th:error="*{password}">Incorrect date</p>
+      </div>
+      <div class="form-group">
+        <label th:for="name">이름</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="이름을 입력하세요."
+               th:class="${#fields.hasErrors('name')} ? 'fieldError' : ''" required>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+      </div>
+      <!-- // 회원 정보 수정 시 노출
+      <div class="form-group">
+        <label for="postal-code">우편번호</label>
+        <div class="postal-code-container">
+          <input type="text" id="postal-code" placeholder="12345" maxlength="5" pattern="[0-9]{5}">
+          <button type="button" class="btn-secondary" id="find-postal-code">주소 찾기</button>
+        </div>
+      </div>
+      -->
+      <button type="submit" class="btn-primary">가입하기</button>
+    </form>
+
+    <div class="separator">
+      <div class="separator-line"></div>
+      <span class="separator-text">또는</span>
+      <div class="separator-line"></div>
+    </div>
+
+    <button type="button" class="btn-kakao">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C6.48 3 2 6.48 2 10.8C2 13.8 3.9 16.38 6.72 17.7C6.54 18.24 5.88 20.1 5.82 20.34C5.82 20.34 5.76 20.7 6 20.82C6.24 20.94 6.54 20.76 6.54 20.76C6.84 20.58 9.6 18.66 10.32 18.18C10.86 18.24 11.4 18.3 12 18.3C17.52 18.3 22 14.82 22 10.5C22 6.18 17.52 3 12 3Z" />
+      </svg>
+      카카오톡으로 로그인
+    </button>
+  </div>
+  <div class="card-footer">
+    <p>이미 계정이 있으신가요? <a href="/loginForm">로그인</a></p>
+  </div>
+</div>
+
+<script>
+  /*
+  document.getElementById('signup-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Handle form submission
+    console.log({ name, email, password });
+  });
+
+   */
+
+  document.querySelector('.btn-kakao').addEventListener('click', function() {
+    // In a real implementation, this would integrate with Kakao SDK
+    console.log('Kakao login clicked');
+  });
+</script>
+</body>
+</html>

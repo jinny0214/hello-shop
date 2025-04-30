@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-button {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .action-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .icon-container {
+            background-color: #f0f0f5;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .order-icon { color: #4f46e5; }
+        .list-icon { color: #0ea5e9; }
+        .history-icon { color: #10b981; }
+        .add-icon { color: #f97316; }
+
+        .button-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .button-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .button-footer {
+            background-color: #f9fafb;
+            color: #4b5563;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-top: 1px solid #f0f0f5;
+        }
+
+        .controls {
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls h2 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .toggle-button {
+            background-color: #f0f0f5;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .toggle-button:hover {
+            background-color: #e0e0e5;
+        }
+
+        .toggle-button.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toggle-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1>Hello World!</h1>
+        <p>필요한 기능을 선택하세요</p>
+    </header>
+
+    <div class="controls">
+        <h2>버튼 표시 설정</h2>
+        <div class="toggle-group">
+            <button class="toggle-button active" data-target="order-button">상품 주문</button>
+            <button class="toggle-button active" data-target="list-button">상품 목록</button>
+            <button class="toggle-button active" data-target="history-button">주문 내역</button>
+            <button class="toggle-button active" data-target="register-button">상품 등록</button>
+            <button class="toggle-button" data-target="all">모두 표시</button>
+            <button class="toggle-button" data-target="none">모두 숨김</button>
+        </div>
+    </div>
+
+    <div class="button-grid">
+        <!-- 상품 주문 -->
+        <button class="action-button" id="order-button">
+            <div class="button-content">
+                <div class="icon-container order-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </div>
+                <h2 class="button-title">상품 주문</h2>
+                <p class="button-description">
+                    원하는 상품을 선택하고 주문할 수 있습니다.
+                </p>
+            </div>
+            <div class="button-footer">
+                주문하기
+            </div>
+        </button>
+
+        <!-- 상품 목록 -->
+        <button class="action-button" id="list-button">
+            <div class="button-content">
+                <div class="icon-container list-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </div>
+                <h2 class="button-title">상품 목록</h2>
+                <p class="button-description">
+                    등록된 모든 상품을 확인하고 관리할 수 있습니다.
+                </p>
+            </div>
+            <div class="button-footer">
+                목록 보기
+            </div>
+        </button>
+
+        <!-- 주문 내역 -->
+        <button class="action-button" id="history-button">
+            <div class="button-content">
+                <div class="icon-container history-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <h2 class="button-title">주문 내역</h2>
+                <p class="button-description">
+                    과거 주문 내역을 확인하고 관리할 수 있습니다.
+                </p>
+            </div>
+            <div class="button-footer">
+                내역 보기
+            </div>
+        </button>
+
+        <!-- 상품 등록 -->
+        <button class="action-button" id="register-button">
+            <div class="button-content">
+                <div class="icon-container add-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <h2 class="button-title">상품 등록</h2>
+                <p class="button-description">
+                    새로운 상품을 시스템에 등록할 수 있습니다.
+                </p>
+            </div>
+            <div class="button-footer">
+                등록하기
+            </div>
+        </button>
+    </div>
+</div>
+
+<script>
+    // 버튼 클릭 이벤트
+    document.getElementById('order-button').addEventListener('click', function() {
+        alert('상품 주문 페이지로 이동합니다.');
+    });
+
+    document.getElementById('list-button').addEventListener('click', function() {
+        alert('상품 목록 페이지로 이동합니다.');
+    });
+
+    document.getElementById('history-button').addEventListener('click', function() {
+        alert('주문 내역 페이지로 이동합니다.');
+    });
+
+    document.getElementById('register-button').addEventListener('click', function() {
+        alert('상품 등록 페이지로 이동합니다.');
+    });
+
+    // 토글 버튼 기능
+    const toggleButtons = document.querySelectorAll('.toggle-button');
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+
+            // 모두 표시 버튼
+            if (target === 'all') {
+                document.querySelectorAll('.action-button').forEach(btn => {
+                    btn.classList.remove('hidden');
+                });
+
+                // 토글 버튼 상태 업데이트
+                document.querySelectorAll('.toggle-button:not([data-target="all"]):not([data-target="none"])').forEach(btn => {
+                    btn.classList.add('active');
+                });
+
+                return;
+            }
+
+            // 모두 숨김 버튼
+            if (target === 'none') {
+                document.querySelectorAll('.action-button').forEach(btn => {
+                    btn.classList.add('hidden');
+                });
+
+                // 토글 버튼 상태 업데이트
+                document.querySelectorAll('.toggle-button:not([data-target="all"]):not([data-target="none"])').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                return;
+            }
+
+            // 개별 버튼 토글
+            const actionButton = document.getElementById(target);
+            if (actionButton) {
+                actionButton.classList.toggle('hidden');
+                this.classList.toggle('active');
+            }
+        });
+    });
+
+    // 조건에 따라 버튼 표시 여부를 설정하는 함수
+    function setButtonVisibility(conditions) {
+        // 예시: conditions = { showOrder: true, showList: false, showHistory: true, showRegister: false }
+
+        if (conditions.hasOwnProperty('showOrder')) {
+            document.getElementById('order-button').classList.toggle('hidden', !conditions.showOrder);
+            document.querySelector('.toggle-button[data-target="order-button"]').classList.toggle('active', conditions.showOrder);
+        }
+
+        if (conditions.hasOwnProperty('showList')) {
+            document.getElementById('list-button').classList.toggle('hidden', !conditions.showList);
+            document.querySelector('.toggle-button[data-target="list-button"]').classList.toggle('active', conditions.showList);
+        }
+
+        if (conditions.hasOwnProperty('showHistory')) {
+            document.getElementById('history-button').classList.toggle('hidden', !conditions.showHistory);
+            document.querySelector('.toggle-button[data-target="history-button"]').classList.toggle('active', conditions.showHistory);
+        }
+
+        if (conditions.hasOwnProperty('showRegister')) {
+            document.getElementById('register-button').classList.toggle('hidden', !conditions.showRegister);
+            document.querySelector('.toggle-button[data-target="register-button"]').classList.toggle('active', conditions.showRegister);
+        }
+    }
+
+    // 예시: 사용자 권한에 따라 버튼 표시 설정
+    function setButtonsByUserRole(role) {
+        // 실제 구현에서는 서버에서 사용자 권한을 받아와서 처리
+        const conditions = {
+            admin: { showOrder: true, showList: true, showHistory: true, showRegister: true },
+            manager: { showOrder: true, showList: true, showHistory: true, showRegister: false },
+            staff: { showOrder: true, showList: true, showHistory: false, showRegister: false },
+            customer: { showOrder: true, showList: false, showHistory: true, showRegister: false }
+        };
+
+        if (conditions[role]) {
+            setButtonVisibility(conditions[role]);
+        }
+    }
+
+    // 사용 예시 (주석 처리)
+    // setButtonsByUserRole('manager');
+
+    // 또는 API 응답에 따라 버튼 표시 설정
+    // fetch('/api/user/permissions')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setButtonVisibility({
+    //       showOrder: data.canOrder,
+    //       showList: data.canViewList,
+    //       showHistory: data.canViewHistory,
+    //       showRegister: data.canRegister
+    //     });
+    //   });
+</script>
+</body>
+</html>
